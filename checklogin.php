@@ -20,7 +20,20 @@ while($row = $result->fetch_array()){
 	}
 }
 
+$qry = "SELECT sc.ShopCartID AS ShopCartID, COUNT(sci.ProductID) AS NumItems FROM ShopCart sc LEFT JOIN ShopCartItem sci on sc.ShopCartID = sci.ShopCartID WHERE sc.OrderPlaced = 0 AND sc.ShopperID = ?";
+$stmt = $conn->prepare($qry);
+$stmt->bind_param("i", $_SESSION["ShopperID"]);
+$stmt->execute();
+$result = $stmt->get_result();
+$stmt->close();
 $conn->close();
+
+if ($result->num_rows > 0) {
+	while ($row = $result->fetch_array()) {
+		$_SESSION["Cart"] = $row["ShopCartID"];
+		$_SESSION["NumCartItem"] = $row["NumItems"];
+	}
+}
 
 include("header.php"); 	
 echo $Message;
