@@ -13,7 +13,7 @@ $qry = "SELECT * FROM Shopper";
 $result = $conn->query($qry);
 
 while($row = $result->fetch_array()){
-	if($email == $row["Email"] && $pwd == $row["Password"]){
+	if($email == $row["Email"] && password_verify($pwd , $row["Password"])){
 		$_SESSION["ShopperName"] = $row["Name"];
 		$_SESSION["ShopperID"] = $row["ShopperID"];
 		$Message = "<h3>Hello</h3>";

@@ -6,7 +6,7 @@ $address = $_POST["address"];
 $country = $_POST["country"];
 $phone = $_POST["phone"];
 $email = $_POST["email"];
-$password = $_POST["password"];
+$password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
 include_once("mysql_conn.php");
 
